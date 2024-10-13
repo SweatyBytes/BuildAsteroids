@@ -25,6 +25,8 @@ def main():
     while 1:
         screen.fill((0, 0, 0)) # Fill the screen with black
 
+        player_instance.update(dt)
+        
         # Call the player's draw method
         player_instance.draw(screen)
 
