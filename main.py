@@ -13,7 +13,7 @@ def main():
     pygame.init()
     screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 
-    pygame.time.Clock
+    clock = pygame.time.Clock() # Create an instance of Clock
     dt = 0
 
     while 1 == 1:
@@ -24,8 +24,7 @@ def main():
             if event.type == pygame.QUIT: # Check if the event is of type QUIT (like clicking 'X' button)
                 return # Exit the main game loop, effectively closing the window
         
-        pygame.time.Clock.tick(60) # Pause the game loop until 1/60th of a second has passed.
-        dt = pygame.tick() / 1000 # convert delta time (dt) from milliseconds to seconds, save into dt
+        dt = clock.tick(60) / 1000 # convert delta time (dt) from milliseconds to seconds, save into dt
 
 if __name__ == "__main__":
     main()
