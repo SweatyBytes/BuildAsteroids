@@ -7,6 +7,7 @@ class Player(circleshape.CircleShape):
     def __init__(self, x, y):
         super().__init__(x, y, constants.PLAYER_RADIUS)
         self.rotation = 0
+        self.timer = 0
 
     def triangle(self):
         forward = pygame.Vector2(0, 1).rotate(self.rotation)
@@ -37,8 +38,12 @@ class Player(circleshape.CircleShape):
         if keys[pygame.K_s]:  # If the 'S' key is pressed, move backward
             self.move(-dt)
 
-        if keys[pygame.K_SPACE]:  # If the 'Spacebar' key is pressed, shoot a shot
+        if keys[pygame.K_SPACE] and self.timer <= 0: # If the 'Spacebar' key is pressed, and timer <= 0, shoot a shot
             self.shoot()
+            self.timer = constants.PLAYER_SHOOT_COOLDOWN
+        
+        if self.timer > 0:
+            self.timer -= dt
     
     def move(self, dt):
         forward = pygame.Vector2(0, 1).rotate(self.rotation)
@@ -46,7 +51,7 @@ class Player(circleshape.CircleShape):
 
     def shoot(self):
         shot_position = self.position
-        shot_velocity = pygame.Vector2(0, -1).rotate(self.rotation) * constants.PLAYER_SHOOT_SPEED
+        shot_velocity = pygame.Vector2(0, 1).rotate(self.rotation) * constants.PLAYER_SHOOT_SPEED        
         new_shot = Shot(shot_position.x, shot_position.y, constants.SHOT_RADIUS)
         new_shot.velocity = shot_velocity
         self.groups()[0].add(new_shot)  # Add the new shot to the same group as the player
