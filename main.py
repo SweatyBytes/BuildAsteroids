@@ -2,8 +2,10 @@
 # the open-source pygame library
 # throughout this file
 import pygame
-import player
+from player import *
 from constants import *
+from asteroid import *
+from asteroidfield import *
 
 def main():
     
@@ -11,24 +13,46 @@ def main():
     print(f"Screen width: {SCREEN_WIDTH}")
     print(f"Screen height: {SCREEN_HEIGHT}")
 
+    # Initialize Asteroids game within screen
     pygame.init()
     screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
+
+    # groups
+    updatable = pygame.sprite.Group()
+    drawable = pygame.sprite.Group()
+    asteroids = pygame.sprite.Group() # asteroids group
+
+    # containers
+    Player.containers = (updatable, drawable)
+    Asteroid.containers = (asteroids, updatable, drawable)
+    AsteroidField.containers = (updatable,)
 
     # Instantiate the Player at the center of the screen
     player_x = SCREEN_WIDTH / 2
     player_y = SCREEN_HEIGHT / 2
-    player_instance = player.Player(player_x, player_y)
+    player_instance = Player(player_x, player_y)
 
-    clock = pygame.time.Clock() # Create an instance of Clock
+    # Instantiate the asteroid field
+    asteroid_field = AsteroidField()
+
+    # Create an instance of Clock & delta time
+    clock = pygame.time.Clock() 
     dt = 0
 
     while 1:
         screen.fill((0, 0, 0)) # Fill the screen with black
 
-        player_instance.update(dt)
-        
-        # Call the player's draw method
-        player_instance.draw(screen)
+        # Update all sprites in the updatable group
+        for player in updatable:
+            player.update(dt)
+
+        # Draw all sprites in the drawable group
+        for player in drawable:
+            player.draw(screen)
+
+        ### Previous code ###
+        # player_instance.update(dt)
+        # player_instance.draw(screen)
 
         pygame.display.flip() # Update the full display Surface to the screen
 
