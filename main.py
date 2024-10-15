@@ -2,6 +2,7 @@
 # the open-source pygame library
 # throughout this file
 import pygame
+import sys
 from player import *
 from constants import *
 from asteroid import *
@@ -50,9 +51,11 @@ def main():
         for player in drawable:
             player.draw(screen)
 
-        ### Previous code ###
-        # player_instance.update(dt)
-        # player_instance.draw(screen)
+        # Collision detection check
+        for asteroid in asteroids:
+            if player_instance.collision(asteroid):
+                print("Game over!")
+                sys.exit() # Exit the game loop
 
         pygame.display.flip() # Update the full display Surface to the screen
 
@@ -61,8 +64,6 @@ def main():
                 return # Exit the main game loop, effectively closing the window
         
         dt = clock.tick(60) / 1000 # convert delta time (dt) from milliseconds to seconds, save into dt
-
-
 
 if __name__ == "__main__":
     main()
