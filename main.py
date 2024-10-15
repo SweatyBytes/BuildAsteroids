@@ -22,11 +22,13 @@ def main():
     updatable = pygame.sprite.Group()
     drawable = pygame.sprite.Group()
     asteroids = pygame.sprite.Group() # asteroids group
+    shots = pygame.sprite.Group() # shots group
 
     # containers
     Player.containers = (updatable, drawable)
     Asteroid.containers = (asteroids, updatable, drawable)
     AsteroidField.containers = (updatable,)
+    Shot.containers = (shots, updatable, drawable) # shots container
 
     # Instantiate the Player at the center of the screen
     player_x = SCREEN_WIDTH / 2
@@ -44,12 +46,12 @@ def main():
         screen.fill((0, 0, 0)) # Fill the screen with black
 
         # Update all sprites in the updatable group
-        for player in updatable:
-            player.update(dt)
+        for entity in updatable:
+            entity.update(dt)
 
         # Draw all sprites in the drawable group
-        for player in drawable:
-            player.draw(screen)
+        for entity in drawable:
+            entity.draw(screen)
 
         # Collision detection check
         for asteroid in asteroids:
