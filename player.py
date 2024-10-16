@@ -70,5 +70,4 @@ class Shot(circleshape.CircleShape):
                        2)
     
     def update(self, dt):
-        # Move the shot based on its velocity
-        self.position += self.velocity * dt
+        self.position += self.velocity * dt # Move the shot based on its velocity

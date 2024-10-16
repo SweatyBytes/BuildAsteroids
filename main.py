@@ -59,6 +59,13 @@ def main():
                 print("Game over!")
                 sys.exit() # Exit the game loop
 
+        # Collision asteroid with shot check
+        for asteroid in asteroids:
+            for shot in shots:
+                if shot.collision(asteroid):
+                    asteroid.kill()
+                    shot.kill()
+
         pygame.display.flip() # Update the full display Surface to the screen
 
         for event in pygame.event.get(): # Iterate over all events in the pygame event queue
