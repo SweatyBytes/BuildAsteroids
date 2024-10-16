@@ -60,11 +60,15 @@ def main():
                 sys.exit() # Exit the game loop
 
         # Collision asteroid with shot check
-        for asteroid in asteroids:
+        for asteroid in list(asteroids):  # Create a copy of the list to safely modify it
             for shot in shots:
                 if shot.collision(asteroid):
-                    asteroid.kill()
+                    new_asteroids = asteroid.split()
+                    if new_asteroids:
+                        asteroids.add(new_asteroids[0])
+                        asteroids.add(new_asteroids[1])
                     shot.kill()
+                    break  # Break the inner loop as the shot is now gone
 
         pygame.display.flip() # Update the full display Surface to the screen
 
